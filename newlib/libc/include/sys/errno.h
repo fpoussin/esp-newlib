@@ -1,3 +1,27 @@
+/* Copyright (c) 2003-2006 Tensilica Inc.  ALL RIGHTS RESERVED.
+
+   Redistribution and use in source and binary forms, with or without 
+   modification, are permitted provided that the following conditions are met: 
+
+   1. Redistributions of source code must retain the above copyright 
+      notice, this list of conditions and the following disclaimer.
+
+   2. Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+
+   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
+   IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+   TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+   PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL TENSILICA
+   INCORPORATED BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+   EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+   PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+   PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+   LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+   NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+   SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.  */
+
 /* errno is not a global variable, because that would make using it
    non-reentrant.  Instead, its address is returned by the function
    __errno.  */
@@ -9,148 +33,139 @@ extern "C" {
 #define _SYS_ERRNO_H_
 
 #include <sys/reent.h>
+#include <xtensa/simcall-errno.h>
 
 #ifndef _REENT_ONLY
 #define errno (*__errno())
 extern int *__errno _PARAMS ((void));
 #endif
 
-/* Please don't use these variables directly.
-   Use strerror instead. */
-extern __IMPORT _CONST char * _CONST _sys_errlist[];
-extern __IMPORT int _sys_nerr;
-#ifdef __CYGWIN__
-extern __IMPORT const char * const sys_errlist[];
-extern __IMPORT int sys_nerr;
-#endif
-
 #define __errno_r(ptr) ((ptr)->_errno)
 
-#define	EPERM 1		/* Not super-user */
-#define	ENOENT 2	/* No such file or directory */
-#define	ESRCH 3		/* No such process */
-#define	EINTR 4		/* Interrupted system call */
-#define	EIO 5		/* I/O error */
-#define	ENXIO 6		/* No such device or address */
-#define	E2BIG 7		/* Arg list too long */
-#define	ENOEXEC 8	/* Exec format error */
-#define	EBADF 9		/* Bad file number */
-#define	ECHILD 10	/* No children */
-#define	EAGAIN 11	/* No more processes */
-#define	ENOMEM 12	/* Not enough core */
-#define	EACCES 13	/* Permission denied */
-#define	EFAULT 14	/* Bad address */
-#define	ENOTBLK 15	/* Block device required */
-#define	EBUSY 16	/* Mount device busy */
-#define	EEXIST 17	/* File exists */
-#define	EXDEV 18	/* Cross-device link */
-#define	ENODEV 19	/* No such device */
-#define	ENOTDIR 20	/* Not a directory */
-#define	EISDIR 21	/* Is a directory */
-#define	EINVAL 22	/* Invalid argument */
-#define	ENFILE 23	/* Too many open files in system */
-#define	EMFILE 24	/* Too many open files */
-#define	ENOTTY 25	/* Not a typewriter */
-#define	ETXTBSY 26	/* Text file busy */
-#define	EFBIG 27	/* File too large */
-#define	ENOSPC 28	/* No space left on device */
-#define	ESPIPE 29	/* Illegal seek */
-#define	EROFS 30	/* Read only file system */
-#define	EMLINK 31	/* Too many links */
-#define	EPIPE 32	/* Broken pipe */
-#define	EDOM 33		/* Math arg out of domain of func */
-#define	ERANGE 34	/* Math result not representable */
-#define	ENOMSG 35	/* No message of desired type */
-#define	EIDRM 36	/* Identifier removed */
-#define	ECHRNG 37	/* Channel number out of range */
-#define	EL2NSYNC 38	/* Level 2 not synchronized */
-#define	EL3HLT 39	/* Level 3 halted */
-#define	EL3RST 40	/* Level 3 reset */
-#define	ELNRNG 41	/* Link number out of range */
-#define	EUNATCH 42	/* Protocol driver not attached */
-#define	ENOCSI 43	/* No CSI structure available */
-#define	EL2HLT 44	/* Level 2 halted */
-#define	EDEADLK 45	/* Deadlock condition */
-#define	ENOLCK 46	/* No record locks available */
-#define EBADE 50	/* Invalid exchange */
-#define EBADR 51	/* Invalid request descriptor */
-#define EXFULL 52	/* Exchange full */
-#define ENOANO 53	/* No anode */
-#define EBADRQC 54	/* Invalid request code */
-#define EBADSLT 55	/* Invalid slot */
-#define EDEADLOCK 56	/* File locking deadlock error */
-#define EBFONT 57	/* Bad font file fmt */
-#define ENOSTR 60	/* Device not a stream */
-#define ENODATA 61	/* No data (for no delay io) */
-#define ETIME 62	/* Timer expired */
-#define ENOSR 63	/* Out of streams resources */
-#define ENONET 64	/* Machine is not on the network */
-#define ENOPKG 65	/* Package not installed */
-#define EREMOTE 66	/* The object is remote */
-#define ENOLINK 67	/* The link has been severed */
-#define EADV 68		/* Advertise error */
-#define ESRMNT 69	/* Srmount error */
-#define	ECOMM 70	/* Communication error on send */
-#define EPROTO 71	/* Protocol error */
-#define	EMULTIHOP 74	/* Multihop attempted */
-#define	ELBIN 75	/* Inode is remote (not really error) */
-#define	EDOTDOT 76	/* Cross mount point (not really error) */
-#define EBADMSG 77	/* Trying to read unreadable message */
-#define EFTYPE 79	/* Inappropriate file type or format */
-#define ENOTUNIQ 80	/* Given log. name not unique */
-#define EBADFD 81	/* f.d. invalid for this operation */
-#define EREMCHG 82	/* Remote address changed */
-#define ELIBACC 83	/* Can't access a needed shared lib */
-#define ELIBBAD 84	/* Accessing a corrupted shared lib */
-#define ELIBSCN 85	/* .lib section in a.out corrupted */
-#define ELIBMAX 86	/* Attempting to link in too many libs */
-#define ELIBEXEC 87	/* Attempting to exec a shared library */
-#define ENOSYS 88	/* Function not implemented */
-#define ENMFILE 89      /* No more files */
-#define ENOTEMPTY 90	/* Directory not empty */
-#define ENAMETOOLONG 91	/* File or path name too long */
-#define ELOOP 92	/* Too many symbolic links */
-#define EOPNOTSUPP 95	/* Operation not supported on transport endpoint */
-#define EPFNOSUPPORT 96 /* Protocol family not supported */
-#define ECONNRESET 104  /* Connection reset by peer */
-#define ENOBUFS 105	/* No buffer space available */
-#define EAFNOSUPPORT 106 /* Address family not supported by protocol family */
-#define EPROTOTYPE 107	/* Protocol wrong type for socket */
-#define ENOTSOCK 108	/* Socket operation on non-socket */
-#define ENOPROTOOPT 109	/* Protocol not available */
-#define ESHUTDOWN 110	/* Can't send after socket shutdown */
-#define ECONNREFUSED 111	/* Connection refused */
-#define EADDRINUSE 112		/* Address already in use */
-#define ECONNABORTED 113	/* Connection aborted */
-#define ENETUNREACH 114		/* Network is unreachable */
-#define ENETDOWN 115		/* Network interface is not configured */
-#define ETIMEDOUT 116		/* Connection timed out */
-#define EHOSTDOWN 117		/* Host is down */
-#define EHOSTUNREACH 118	/* Host is unreachable */
-#define EINPROGRESS 119		/* Connection already in progress */
-#define EALREADY 120		/* Socket already connected */
-#define EDESTADDRREQ 121	/* Destination address required */
-#define EMSGSIZE 122		/* Message too long */
-#define EPROTONOSUPPORT 123	/* Unknown protocol */
-#define ESOCKTNOSUPPORT 124	/* Socket type not supported */
-#define EADDRNOTAVAIL 125	/* Address not available */
-#define ENETRESET 126
-#define EISCONN 127		/* Socket is already connected */
-#define ENOTCONN 128		/* Socket is not connected */
-#define ETOOMANYREFS 129
-#define EPROCLIM 130
-#define EUSERS 131
-#define EDQUOT 132
-#define ESTALE 133
-#define ENOTSUP 134		/* Not supported */
-#define ENOMEDIUM 135   /* No medium (in tape drive) */
-#define ENOSHARE 136    /* No such host or network path */
-#define ECASECLASH 137  /* Filename exists with different case */
-#define EILSEQ 138
-#define EOVERFLOW 139	/* Value too large for defined data type */
+#define EPERM		_SIMC_EPERM
+#define ENOENT		_SIMC_ENOENT
+#define ESRCH		_SIMC_ESRCH
+#define EINTR		_SIMC_EINTR
+#define EIO		_SIMC_EIO
+#define ENXIO		_SIMC_ENXIO
+#define E2BIG		_SIMC_E2BIG
+#define ENOEXEC		_SIMC_ENOEXEC
+#define EBADF		_SIMC_EBADF
+#define ECHILD		_SIMC_ECHILD
+#define EAGAIN		_SIMC_EAGAIN
+#define ENOMEM		_SIMC_ENOMEM
+#define EACCES		_SIMC_EACCES
+#define EFAULT		_SIMC_EFAULT
+#define ENOTBLK		_SIMC_ENOTBLK
+#define EBUSY		_SIMC_EBUSY
+#define EEXIST		_SIMC_EEXIST
+#define EXDEV		_SIMC_EXDEV
+#define ENODEV		_SIMC_ENODEV
+#define ENOTDIR		_SIMC_ENOTDIR
+#define EISDIR		_SIMC_EISDIR
+#define EINVAL		_SIMC_EINVAL
+#define ENFILE		_SIMC_ENFILE
+#define EMFILE		_SIMC_EMFILE
+#define ENOTTY		_SIMC_ENOTTY
+#define ETXTBSY		_SIMC_ETXTBSY
+#define EFBIG		_SIMC_EFBIG
+#define ENOSPC		_SIMC_ENOSPC
+#define ESPIPE		_SIMC_ESPIPE
+#define EROFS		_SIMC_EROFS
+#define EMLINK		_SIMC_EMLINK
+#define EPIPE		_SIMC_EPIPE
+#define EDOM		_SIMC_EDOM
+#define ERANGE		_SIMC_ERANGE
+#define ENOMSG		_SIMC_ENOMSG
+#define EIDRM		_SIMC_EIDRM
+#define ECHRNG		_SIMC_ECHRNG
+#define EL2NSYNC	_SIMC_EL2NSYNC
+#define EL3HLT		_SIMC_EL3HLT
+#define EL3RST		_SIMC_EL3RST
+#define ELNRNG		_SIMC_ELNRNG
+#define EUNATCH		_SIMC_EUNATCH
+#define ENOCSI		_SIMC_ENOCSI
+#define EL2HLT		_SIMC_EL2HLT
+#define EDEADLK		_SIMC_EDEADLK
+#define ENOLCK		_SIMC_ENOLCK
+#define EBADE		_SIMC_EBADE
+#define EBADR		_SIMC_EBADR
+#define EXFULL		_SIMC_EXFULL
+#define ENOANO		_SIMC_ENOANO
+#define EBADRQC		_SIMC_EBADRQC
+#define EBADSLT		_SIMC_EBADSLT
+#define EDEADLOCK	_SIMC_EDEADLOCK
+#define EBFONT		_SIMC_EBFONT
+#define ENOSTR		_SIMC_ENOSTR
+#define ENODATA		_SIMC_ENODATA
+#define ETIME		_SIMC_ETIME
+#define ENOSR		_SIMC_ENOSR
+#define ENONET		_SIMC_ENONET
+#define ENOPKG		_SIMC_ENOPKG
+#define EREMOTE		_SIMC_EREMOTE
+#define ENOLINK		_SIMC_ENOLINK
+#define EADV		_SIMC_EADV
+#define ESRMNT		_SIMC_ESRMNT
+#define ECOMM		_SIMC_ECOMM
+#define EPROTO		_SIMC_EPROTO
+#define EMULTIHOP	_SIMC_EMULTIHOP
+#define ELBIN		_SIMC_ELBIN
+#define EDOTDOT		_SIMC_EDOTDOT
+#define EBADMSG		_SIMC_EBADMSG
+#define EFTYPE		_SIMC_EFTYPE
+#define ENOTUNIQ	_SIMC_ENOTUNIQ
+#define EBADFD		_SIMC_EBADFD
+#define EREMCHG		_SIMC_EREMCHG
+#define ELIBACC		_SIMC_ELIBACC
+#define ELIBBAD		_SIMC_ELIBBAD
+#define ELIBSCN		_SIMC_ELIBSCN
+#define ELIBMAX		_SIMC_ELIBMAX
+#define ELIBEXEC	_SIMC_ELIBEXEC
+#define ENOSYS		_SIMC_ENOSYS
+#define ENMFILE		_SIMC_ENMFILE
+#define ENOTEMPTY	_SIMC_ENOTEMPTY
+#define ENAMETOOLONG	_SIMC_ENAMETOOLONG
+#define ELOOP		_SIMC_ELOOP
+#define EOPNOTSUPP	_SIMC_EOPNOTSUPP
+#define EPFNOSUPPORT	_SIMC_EPFNOSUPPORT
+#define ECONNRESET	_SIMC_ECONNRESET
+#define ENOBUFS		_SIMC_ENOBUFS
+#define EAFNOSUPPORT	_SIMC_EAFNOSUPPORT
+#define EPROTOTYPE	_SIMC_EPROTOTYPE
+#define ENOTSOCK	_SIMC_ENOTSOCK
+#define ENOPROTOOPT	_SIMC_ENOPROTOOPT
+#define ESHUTDOWN	_SIMC_ESHUTDOWN
+#define ECONNREFUSED	_SIMC_ECONNREFUSED
+#define EADDRINUSE	_SIMC_EADDRINUSE
+#define ECONNABORTED	_SIMC_ECONNABORTED
+#define ENETUNREACH	_SIMC_ENETUNREACH
+#define ENETDOWN	_SIMC_ENETDOWN
+#define ETIMEDOUT	_SIMC_ETIMEDOUT
+#define EHOSTDOWN	_SIMC_EHOSTDOWN
+#define EHOSTUNREACH	_SIMC_EHOSTUNREACH
+#define EINPROGRESS	_SIMC_EINPROGRESS
+#define EALREADY	_SIMC_EALREADY
+#define EDESTADDRREQ	_SIMC_EDESTADDRREQ
+#define EMSGSIZE	_SIMC_EMSGSIZE
+#define EPROTONOSUPPORT	_SIMC_EPROTONOSUPPORT
+#define ESOCKTNOSUPPORT	_SIMC_ESOCKTNOSUPPORT
+#define EADDRNOTAVAIL	_SIMC_EADDRNOTAVAIL
+#define ENETRESET	_SIMC_ENETRESET
+#define EISCONN		_SIMC_EISCONN
+#define ENOTCONN	_SIMC_ENOTCONN
+#define ETOOMANYREFS	_SIMC_ETOOMANYREFS
+#define EPROCLIM	_SIMC_EPROCLIM
+#define EUSERS		_SIMC_EUSERS
+#define EDQUOT		_SIMC_EDQUOT
+#define ESTALE		_SIMC_ESTALE
+#define ENOTSUP		_SIMC_ENOTSUP
+#define ENOMEDIUM	_SIMC_ENOMEDIUM
+#define ENOSHARE	_SIMC_ENOSHARE
+#define ECASECLASH	_SIMC_ECASECLASH
+#define EILSEQ		_SIMC_EILSEQ
+#define EOVERFLOW	_SIMC_EOVERFLOW
 
-/* From cygwin32.  */
-#define EWOULDBLOCK EAGAIN	/* Operation would block */
+#define EWOULDBLOCK	EAGAIN
 
 #define __ELASTERROR 2000	/* Users can add values starting here */
 
